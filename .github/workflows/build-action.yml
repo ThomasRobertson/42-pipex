@@ -1,0 +1,19 @@
+name: Build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Compiling using GCC
+      run: make re
+      env:
+        CC: gcc
+
+    - name: Compiling using Clang
+      run: make re
+      env:
+        CC: clang
