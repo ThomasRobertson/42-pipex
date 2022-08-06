@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 01:45:26 by troberts          #+#    #+#             */
-/*   Updated: 2022/06/24 12:18:35 by troberts         ###   ########.fr       */
+/*   Updated: 2022/08/07 01:14:43 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*str;
 	char	*ptr;
 
+	if (s1 == NULL)
+		return (ft_strdup(s2));
+	if (s2 == NULL)
+		return (ft_strdup(s1));
 	len = ft_strlen(s1) + ft_strlen(s2);
 	str = ft_strnew_static(len);
 	ptr = str;
