@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 20:32:42 by troberts          #+#    #+#             */
-/*   Updated: 2022/08/06 11:32:48 by troberts         ###   ########.fr       */
+/*   Updated: 2022/08/07 01:36:10 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,16 @@ static void	clean_error(char **array, char *str)
 	exit(EXIT_FAILURE);
 }
 
-char	*get_path_of_cmd(char **envp, char *cmd)
+static char	**get_options(char **cmd)
+{
+	char	**cmd_array;
+
+	cmd_array = ft_split(*cmd, ' ');
+	*cmd = ft_strdup(cmd_array[0]);
+	return (cmd_array);
+}
+
+char	*get_path_of_cmd(char **envp, char *cmd, char ***options)
 {
 	int		i;
 	char	**path_env;
@@ -46,6 +55,7 @@ char	*get_path_of_cmd(char **envp, char *cmd)
 	while (ft_strnstr(envp[i], "PATH=", 5) == 0)
 		i++;
 	path_env = ft_split(envp[i], ':');
+	*options = get_options(&cmd);
 	i = 0;
 	path_cmd = generate_cmd_path(path_env[i], cmd);
 	if (path_cmd == NULL)

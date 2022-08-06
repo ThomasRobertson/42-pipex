@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 20:25:52 by troberts          #+#    #+#             */
-/*   Updated: 2022/08/06 11:26:27 by troberts         ###   ########.fr       */
+/*   Updated: 2022/08/07 01:22:50 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdio.h>
 # include <string.h>
 
-char	*get_path_of_cmd(char **enpv, char *cmd);
+char	*get_path_of_cmd(char **envp, char *cmd, char ***options);
 
 void	free_double_ptr_char(char **arr_char);
 void	exit_print(char *str);
