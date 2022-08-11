@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 20:32:42 by troberts          #+#    #+#             */
-/*   Updated: 2022/08/07 01:36:10 by troberts         ###   ########.fr       */
+/*   Updated: 2022/08/07 16:48:29 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ static char	*generate_cmd_path(char *path_env, char *cmd)
 
 static void	clean_error(char **array, char *str)
 {
-	free_double_ptr_char(array);
+	ft_free_double_ptr(array);
 	if (str)
-		exit_print(str);
+		ft_exit_print(str, STDERR_FILENO, EXIT_FAILURE);
 	exit(EXIT_FAILURE);
 }
 
@@ -41,7 +41,7 @@ static char	**get_options(char **cmd)
 	char	**cmd_array;
 
 	cmd_array = ft_split(*cmd, ' ');
-	*cmd = ft_strdup(cmd_array[0]);
+	*cmd = cmd_array[0];
 	return (cmd_array);
 }
 

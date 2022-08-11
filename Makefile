@@ -32,8 +32,7 @@ SRC_DIR= src/
 
 SRC_FILE=	\
 			getpathenv.c \
-			main.c \
-			utils.c
+			main.c
 
 SRC_BONUS_FILE= \
 			main.c
