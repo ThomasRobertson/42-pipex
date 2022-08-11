@@ -6,7 +6,7 @@
 #    By: troberts <troberts@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/04 01:33:16 by troberts          #+#    #+#              #
-#    Updated: 2022/07/11 16:39:38 by troberts         ###   ########.fr        #
+#    Updated: 2022/08/07 16:45:10 by troberts         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,8 @@ SRC=	$(SRC_DIR)/ft_atoi.c	\
 		$(SRC_DIR)/ft_atoll.c	\
 		$(SRC_DIR)/ft_bzero.c	\
 		$(SRC_DIR)/ft_calloc.c	\
+		$(SRC_DIR)/ft_exit_print.c	\
+		$(SRC_DIR)/ft_free_double_ptr.c	\
 		$(SRC_DIR)/ft_isalnum.c	\
 		$(SRC_DIR)/ft_isalpha.c	\
 		$(SRC_DIR)/ft_isascii.c	\
