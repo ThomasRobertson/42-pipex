@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 20:25:28 by troberts          #+#    #+#             */
-/*   Updated: 2022/08/07 01:36:18 by troberts         ###   ########.fr       */
+/*   Updated: 2022/08/13 15:17:40 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,10 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*cmd_path;
-	char	**options;
+	t_cmd	*cmd;
 
 	(void)argc;
-	cmd_path = get_path_of_cmd(envp, argv[1], &options);
-	execve(cmd_path, options, envp);
+	cmd = get_path_of_cmd(envp, argv[1]);
+	execve(cmd->path, cmd->options, envp);
 	return (0);
 }
