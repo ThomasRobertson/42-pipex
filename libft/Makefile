@@ -6,7 +6,7 @@
 #    By: troberts <troberts@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/04 01:33:16 by troberts          #+#    #+#              #
-#    Updated: 2022/08/07 16:45:10 by troberts         ###   ########.fr        #
+#    Updated: 2022/08/11 13:32:17 by troberts         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,6 +90,7 @@ SRC=	$(SRC_DIR)/ft_atoi.c	\
 		$(SRC_DIR)/ft_strequ.c	\
 		$(SRC_DIR)/ft_striter.c	\
 		$(SRC_DIR)/ft_striteri.c	\
+		$(SRC_DIR)/ft_strjoin_free.c \
 		$(SRC_DIR)/ft_strjoin.c	\
 		$(SRC_DIR)/ft_strlcat.c	\
 		$(SRC_DIR)/ft_strlcpy.c	\
