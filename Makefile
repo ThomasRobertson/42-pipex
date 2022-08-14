@@ -31,8 +31,11 @@ SRC_DIR= src/
 # **************************************************************************** #
 
 SRC_FILE=	\
+			create_struct_cmd.c \
+			fork.c \
 			getpathenv.c \
-			main.c
+			main.c \
+			utils.c
 
 SRC_BONUS_FILE= \
 			main.c

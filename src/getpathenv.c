@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 20:32:42 by troberts          #+#    #+#             */
-/*   Updated: 2022/08/13 15:35:43 by troberts         ###   ########.fr       */
+/*   Updated: 2022/08/14 23:03:11 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	*generate_cmd_path(char *path_env, char *cmd)
 	return (path_cmd);
 }
 
-static void	clean_error(char **array, t_cmd *cmd, char *str)
+static t_cmd	*clean_error(char **array, t_cmd *cmd, char *str)
 {
 	ft_free_double_ptr(array);
 	cmd->cmd_name = NULL;
@@ -36,17 +36,18 @@ static void	clean_error(char **array, t_cmd *cmd, char *str)
 	free(cmd->path);
 	free(cmd);
 	if (str)
-		ft_exit_print(str, STDERR_FILENO, EXIT_FAILURE);
-	exit(EXIT_FAILURE);
+		ft_putendl_fd(str, STDERR_FILENO);
+	return (NULL);
 }
 
-static t_cmd	*get_options(char *cmd_char)
+static t_cmd	*get_options(char *cmd_char, char **envp)
 {
 	t_cmd	*cmd;
 
 	cmd = malloc(sizeof(t_cmd));
 	cmd->options = ft_split(cmd_char, ' ');
 	cmd->cmd_name = cmd->options[0];
+	cmd->envp = envp;
 	return (cmd);
 }
 
@@ -60,7 +61,7 @@ t_cmd	*get_path_of_cmd(char **envp, char *cmd_char)
 	while (ft_strnstr(envp[i], "PATH=", 5) == 0)
 		i++;
 	path_env = ft_split(envp[i], ':');
-	cmd = get_options(cmd_char);
+	cmd = get_options(cmd_char, envp);
 	i = 0;
 	cmd->path = generate_cmd_path(path_env[i], cmd->cmd_name);
 	if (cmd->path == NULL)
@@ -71,10 +72,10 @@ t_cmd	*get_path_of_cmd(char **envp, char *cmd_char)
 		free(cmd->path);
 		i++;
 		if (path_env[i] == NULL)
-			clean_error(path_env, cmd, "No valid path found for command.");
+			return (clean_error(path_env, cmd, "No valid path found.\n"));
 		cmd->path = generate_cmd_path(path_env[i], cmd->cmd_name);
 		if (cmd->path == NULL)
-			clean_error(path_env, cmd, NULL);
+			return (clean_error(path_env, cmd, NULL));
 	}
 	return (cmd);
 }
