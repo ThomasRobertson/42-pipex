@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 12:48:25 by troberts          #+#    #+#             */
-/*   Updated: 2022/08/15 02:38:34 by troberts         ###   ########.fr       */
+/*   Updated: 2022/08/15 14:24:26 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static t_pid	launch_child_process(t_cmd *cmd, int fd_stdin)
 		execve(cmd->path, cmd->options, cmd->envp);
 		exit(EXIT_FAILURE);
 	}
-	ft_printf("Child %i born.\n", pid.pid);
+	// ft_printf("Child %i born.\n", pid.pid);
 	close(pid.pipefd[PIPE_WRITE]);
 	return (pid);
 }
@@ -62,20 +62,20 @@ int	fork_and_execute_cmd(t_cmd **cmd_array, int fd_file[2])
 		close(fd_read);
 		i++;
 	}
-/* 	status = wait(NULL);
+	status = wait(NULL);
 	while (status > 0)
 	{
 		status = wait(NULL);
-		ft_putendl("A child has died.");
+		// ft_putendl("A child has died.");
 		if (status == -1 && errno != ECHILD)
 		{
 			perror("");
 			return (RETURN_FAILURE);
 		}
-	} */
-	while((status = wait(NULL)) > 0)
+	}
+/* 	while((status = wait(NULL)) > 0)
 	{
 		ft_printf("Child %i has died.\n", status);
-	}
+	} */
 	return (RETURN_SUCCESS);
 }
