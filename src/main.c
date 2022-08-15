@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 20:25:28 by troberts          #+#    #+#             */
-/*   Updated: 2022/08/15 02:23:42 by troberts         ###   ########.fr       */
+/*   Updated: 2022/08/15 14:14:26 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	main(int argc, char **argv, char **envp)
 	int		fd_file[2];
 	t_cmd	**cmd_array;
 
-	(void)argc;
+	if (argc < 5)
+		exit(EXIT_FAILURE);
 	fd_file[FILE_1] = open(argv[1], O_RDONLY);
 	if (fd_file[FILE_1] == -1)
 		perror_exit("", 1);
@@ -28,6 +29,7 @@ int	main(int argc, char **argv, char **envp)
 	if (cmd_array == NULL)
 		perror_exit("", 1);
 	fork_and_execute_cmd(cmd_array, fd_file);
+	free_cmd_array(cmd_array);
 	close(fd_file[FILE_1]);
 	close(fd_file[FILE_2]);
 	return (0);

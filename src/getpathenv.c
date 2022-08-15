@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 20:32:42 by troberts          #+#    #+#             */
-/*   Updated: 2022/08/14 23:03:11 by troberts         ###   ########.fr       */
+/*   Updated: 2022/08/15 14:22:25 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static char	*generate_cmd_path(char *path_env, char *cmd)
 	char	*path_cmd;
 	char	*path_cmd_tmp;
 
+	if (path_env == NULL)
+		return (NULL);
 	path_cmd_tmp = ft_strjoin(ft_strchr(path_env, '/'), "/");
 	if (path_cmd_tmp == NULL)
 	{
@@ -31,10 +33,7 @@ static char	*generate_cmd_path(char *path_env, char *cmd)
 static t_cmd	*clean_error(char **array, t_cmd *cmd, char *str)
 {
 	ft_free_double_ptr(array);
-	cmd->cmd_name = NULL;
-	ft_free_double_ptr(cmd->options);
-	free(cmd->path);
-	free(cmd);
+	free_cmd(cmd);
 	if (str)
 		ft_putendl_fd(str, STDERR_FILENO);
 	return (NULL);
@@ -62,11 +61,10 @@ t_cmd	*get_path_of_cmd(char **envp, char *cmd_char)
 		i++;
 	path_env = ft_split(envp[i], ':');
 	cmd = get_options(cmd_char, envp);
-	i = 0;
-	cmd->path = generate_cmd_path(path_env[i], cmd->cmd_name);
+	cmd->path = generate_cmd_path(path_env[0], cmd->cmd_name);
 	if (cmd->path == NULL)
 		clean_error(path_env, cmd, NULL);
-	i++;
+	i = 1;
 	while (access(cmd->path, F_OK | X_OK) != 0)
 	{
 		free(cmd->path);
@@ -77,5 +75,6 @@ t_cmd	*get_path_of_cmd(char **envp, char *cmd_char)
 		if (cmd->path == NULL)
 			return (clean_error(path_env, cmd, NULL));
 	}
+	ft_free_double_ptr(path_env);
 	return (cmd);
 }
