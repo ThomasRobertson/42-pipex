@@ -15,7 +15,6 @@
 # **************************************************************************** #
 
 NAME= pipex
-NAME_BONUS= pipex_bonus
 
 # CC= gcc
 CFLAGS= -Wall -Wextra -Werror -g -I $(INCLUDES)
@@ -37,16 +36,9 @@ SRC_FILE=	\
 			main.c \
 			utils.c
 
-SRC_BONUS_FILE= \
-			main.c
-
 SRC=		$(addprefix $(SRC_DIR), $(SRC_FILE))
 OBJ_FILE= 	$(SRC_FILE:.c=.o)
 OBJ=		$(addprefix $(OBJ_DIR), $(OBJ_FILE))
-
-SRC_BONUS=		$(addprefix $(SRC_DIR), $(SRC_BONUS_FILE))
-OBJ_BONUS_FILE= $(SRC_BONUS_FILE:.c=.o)
-OBJ_BONUS=		$(addprefix $(OBJ_DIR), $(OBJ_BONUS_FILE))
 
 #OBJ=	$(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 
@@ -129,12 +121,7 @@ $(NAME): $(LIBFT_LIB) $(OBJ)
 
 $(LIBFT_LIB): makelibf ;
 
-bonus: $(NAME_BONUS)
-
-$(NAME_BONUS): $(LIBFT_LIB) $(OBJ_BONUS)
-	$(HEADER)
-	$(HEADER_COMPIL)
-	$(CC) $(CFLAGS) -o $@ $(OBJ_BONUS) $(LIBFT_LIB)
+bonus: $(NAME)
 
 makelibf :
 	$(HEADER_ENTERLIB)
@@ -143,15 +130,10 @@ makelibf :
 
 $(OBJ): | $(OBJ_DIR)
 
-$(OBJ_BONUS): | $(OBJ_DIR)
-
 $(OBJ_DIR):
 	mkdir -p $@
 
 $(OBJ): $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-$(OBJ_BONUS): $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 header:
@@ -189,4 +171,4 @@ norm: header
 	-python3 -m norminette $(INCLUDES)
 	@echo "$(COLOR_END)"
 
-.PHONY: all clean fclean re norm header makelibf cleanobj cleanobjdir fcleanlibft debug
+.PHONY: all clean fclean re norm header makelibf cleanobj cleanobjdir fcleanlibft bonus
