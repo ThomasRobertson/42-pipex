@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 20:25:52 by troberts          #+#    #+#             */
-/*   Updated: 2022/08/15 02:23:18 by troberts         ###   ########.fr       */
+/*   Updated: 2022/08/15 13:21:07 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <string.h>
 # include <fcntl.h>
 # include <errno.h>
+# include <sys/wait.h>
 
 # define PIPE_READ 0
 # define PIPE_WRITE 1
