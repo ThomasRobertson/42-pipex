@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:36:08 by troberts          #+#    #+#             */
-/*   Updated: 2022/08/15 02:49:40 by troberts         ###   ########.fr       */
+/*   Updated: 2022/08/19 11:52:50 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	free_cmd(t_cmd *cmd)
 
 	i = 0;
 	if (cmd->path)
-		free(cmd->path);
+		ft_strdel(&cmd->path);
 	while (cmd->options[i])
 	{
-		free(cmd->options[i]);
+		ft_strdel(&cmd->options[i]);
 		i++;
 	}
 	free(cmd->options);
