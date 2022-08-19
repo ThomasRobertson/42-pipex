@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 20:32:42 by troberts          #+#    #+#             */
-/*   Updated: 2022/08/15 14:22:25 by troberts         ###   ########.fr       */
+/*   Updated: 2022/08/19 07:46:33 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char	*generate_cmd_path(char *path_env, char *cmd)
 	path_cmd_tmp = ft_strjoin(ft_strchr(path_env, '/'), "/");
 	if (path_cmd_tmp == NULL)
 	{
-		perror("Error");
+		perror("generate_cmd_path: Malloc return NULL");
 		return (NULL);
 	}
 	path_cmd = ft_strjoin(path_cmd_tmp, cmd);
@@ -30,12 +30,12 @@ static char	*generate_cmd_path(char *path_env, char *cmd)
 	return (path_cmd);
 }
 
-static t_cmd	*clean_error(char **array, t_cmd *cmd, char *str)
+static t_cmd	*clean_error(char **array, t_cmd *cmd, t_bool display_message)
 {
+	if (display_message)
+		ft_printf("bash: %s: command not found\n", cmd->cmd_name);
 	ft_free_double_ptr(array);
 	free_cmd(cmd);
-	if (str)
-		ft_putendl_fd(str, STDERR_FILENO);
 	return (NULL);
 }
 
@@ -61,20 +61,23 @@ t_cmd	*get_path_of_cmd(char **envp, char *cmd_char)
 		i++;
 	path_env = ft_split(envp[i], ':');
 	cmd = get_options(cmd_char, envp);
-	cmd->path = generate_cmd_path(path_env[0], cmd->cmd_name);
+	cmd->path = ft_strdup(cmd->cmd_name);
 	if (cmd->path == NULL)
-		clean_error(path_env, cmd, NULL);
-	i = 1;
-	while (access(cmd->path, F_OK | X_OK) != 0)
+		clean_error(path_env, cmd, false);
+	free(cmd->path);
+	i = 0;
+	while (path_env[i])
 	{
-		free(cmd->path);
-		i++;
-		if (path_env[i] == NULL)
-			return (clean_error(path_env, cmd, "No valid path found.\n"));
 		cmd->path = generate_cmd_path(path_env[i], cmd->cmd_name);
 		if (cmd->path == NULL)
-			return (clean_error(path_env, cmd, NULL));
+			return (clean_error(path_env, cmd, false));
+		if (access(cmd->path, F_OK | X_OK) == 0)
+			break ;
+		ft_strdel(&(cmd->path));
+		i++;
 	}
+	if (path_env[i] == NULL)
+		return (clean_error(path_env, cmd, true));
 	ft_free_double_ptr(path_env);
 	return (cmd);
 }

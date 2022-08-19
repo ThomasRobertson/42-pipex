@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 12:48:25 by troberts          #+#    #+#             */
-/*   Updated: 2022/08/15 14:24:26 by troberts         ###   ########.fr       */
+/*   Updated: 2022/08/19 07:46:11 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static t_pid	launch_child_process(t_cmd *cmd, int fd_stdin)
 	pipe(pid.pipefd);
 	pid.pid = fork();
 	if (pid.pid == -1)
-		perror_exit("", EXIT_FAILURE);
+		perror_exit("launch_child_process: Cannot launch child", EXIT_FAILURE);
 	if (pid.pid == 0)
 	{
 		dup2(fd_stdin, STDIN_FILENO);
@@ -27,7 +27,9 @@ static t_pid	launch_child_process(t_cmd *cmd, int fd_stdin)
 		close(pid.pipefd[PIPE_READ]);
 		close(pid.pipefd[PIPE_WRITE]);
 		execve(cmd->path, cmd->options, cmd->envp);
-		exit(EXIT_FAILURE);
+		perror("launch_child_process: Error with execve.");
+		pid.pid = EXIT_FAILURE;
+		return (pid);
 	}
 	// ft_printf("Child %i born.\n", pid.pid);
 	close(pid.pipefd[PIPE_WRITE]);
@@ -49,8 +51,10 @@ int	fork_and_execute_cmd(t_cmd **cmd_array, int fd_file[2])
 	int		nbr_cmd;
 	int		i;
 	int		fd_read;
+	int		wstatus;
 	pid_t	status;
 	t_pid	pid;
+	int		exit_status;
 
 	nbr_cmd = size_of_array(cmd_array);
 	i = 0;
@@ -60,22 +64,25 @@ int	fork_and_execute_cmd(t_cmd **cmd_array, int fd_file[2])
 		fd_read = pid.pipefd[PIPE_READ];
 		pid = launch_child_process(cmd_array[i], pid.pipefd[PIPE_READ]);
 		close(fd_read);
+		if (pid.pid == EXIT_FAILURE)
+			return (EXIT_FAILURE);
 		i++;
 	}
-	status = wait(NULL);
+	exit_status = EXIT_SUCCESS;
+	status = wait(&wstatus);
 	while (status > 0)
 	{
-		status = wait(NULL);
-		// ft_putendl("A child has died.");
+		status = wait(&wstatus);
 		if (status == -1 && errno != ECHILD)
 		{
-			perror("");
-			return (RETURN_FAILURE);
+			perror("fork_and_execute_cmd: Other error than no more child");
+			exit_status = EXIT_FAILURE;
 		}
 	}
-/* 	while((status = wait(NULL)) > 0)
-	{
-		ft_printf("Child %i has died.\n", status);
-	} */
-	return (RETURN_SUCCESS);
+	if (exit_status == EXIT_FAILURE)
+		return (exit_status);
+	else if (WIFEXITED(wstatus))
+		return (WEXITSTATUS(wstatus));
+	else
+		return (EXIT_SUCCESS);
 }
