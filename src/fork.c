@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 12:48:25 by troberts          #+#    #+#             */
-/*   Updated: 2022/08/19 10:49:29 by troberts         ###   ########.fr       */
+/*   Updated: 2022/08/22 19:03:12 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,9 @@ static t_pid	launch_child_process(t_cmd *cmd, int fd_stdin, int fd_file2)
 	t_pid	pid;
 
 	if (cmd->path == NULL)
-	{
 		pid.pid = 1;
+	if (cmd->path == NULL)
 		return (pid);
-	}
 	pipe(pid.pipefd);
 	pid.pid = fork();
 	if (pid.pid == -1)
@@ -52,32 +51,12 @@ static int	size_of_array(t_cmd **cmd_array)
 	return (i);
 }
 
-int	fork_and_execute_cmd(t_cmd **cmd_array, int fd_file[2])
+static int	wait_for_child(void)
 {
-	int		nbr_cmd;
-	int		i;
-	int		fd_read;
 	int		wstatus;
-	pid_t	status;
-	t_pid	pid;
 	int		exit_status;
+	pid_t	status;
 
-	nbr_cmd = size_of_array(cmd_array);
-	i = 0;
-	pid.pipefd[PIPE_READ] = fd_file[FILE_1];
-	while (i < nbr_cmd)
-	{
-		fd_read = pid.pipefd[PIPE_READ];
-		if (i == (nbr_cmd - 1))
-			pid = launch_child_process(cmd_array[i], pid.pipefd[PIPE_READ], \
-				fd_file[FILE_2]);
-		else
-			pid = launch_child_process(cmd_array[i], pid.pipefd[PIPE_READ], -1);
-		close(fd_read);
-		if (pid.pid == -1)
-			return (EXIT_FAILURE);
-		i++;
-	}
 	exit_status = EXIT_SUCCESS;
 	status = wait(&wstatus);
 	while (status > 0)
@@ -95,4 +74,30 @@ int	fork_and_execute_cmd(t_cmd **cmd_array, int fd_file[2])
 		return (WEXITSTATUS(wstatus));
 	else
 		return (EXIT_SUCCESS);
+}
+
+int	fork_and_execute_cmd(t_cmd **cmd_array, int fd_file[2])
+{
+	int		nbr_cmd;
+	int		i;
+	int		fd_read;
+	t_pid	pid;
+
+	nbr_cmd = size_of_array(cmd_array);
+	i = 0;
+	pid.pipefd[PIPE_READ] = fd_file[FILE_1];
+	while (i < nbr_cmd)
+	{
+		fd_read = pid.pipefd[PIPE_READ];
+		if (i == (nbr_cmd - 1))
+			pid = launch_child_process(cmd_array[i], pid.pipefd[PIPE_READ], \
+				fd_file[FILE_2]);
+		else
+			pid = launch_child_process(cmd_array[i], pid.pipefd[PIPE_READ], -1);
+		close(fd_read);
+		if (pid.pid == -1)
+			return (EXIT_FAILURE);
+		i++;
+	}
+	return (wait_for_child());
 }
