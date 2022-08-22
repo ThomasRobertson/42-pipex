@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:36:08 by troberts          #+#    #+#             */
-/*   Updated: 2022/08/19 11:52:50 by troberts         ###   ########.fr       */
+/*   Updated: 2022/08/19 19:16:01 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,29 @@ void	free_cmd_array(t_cmd **cmd_array)
 		i++;
 	}
 	free(cmd_array);
+}
+
+t_cmd	**create_struct_cmd_heredoc(char **argv, char **envp)
+{
+	int		i;
+	t_cmd	**cmd_array;
+
+	cmd_array = malloc(sizeof(*cmd_array) * (2 + 1));
+	cmd_array[2] = NULL;
+	if (cmd_array == NULL)
+		return (NULL);
+	i = 0;
+	while (i < 2)
+	{
+		cmd_array[i] = get_path_of_cmd(envp, argv[i + 3]);
+		if (cmd_array[i] == NULL)
+		{
+			free_cmd_array(cmd_array);
+			return (NULL);
+		}
+		i++;
+	}
+	return (cmd_array);
 }
 
 t_cmd	**create_struct_cmd(int argc, char **argv, char **envp)

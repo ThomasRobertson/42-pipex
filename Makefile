@@ -33,6 +33,7 @@ SRC_FILE=	\
 			create_struct_cmd.c \
 			fork.c \
 			getpathenv.c \
+			here_doc.c \
 			main.c \
 			utils.c
 

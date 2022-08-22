@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 20:25:52 by troberts          #+#    #+#             */
-/*   Updated: 2022/08/15 16:28:33 by troberts         ###   ########.fr       */
+/*   Updated: 2022/08/19 19:06:46 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,12 @@ t_cmd	*get_path_of_cmd(char **envp, char *cmd_char);
 int		fork_and_execute_cmd(t_cmd **cmd_array, int fd_file[2]);
 t_cmd	**create_struct_cmd(int argc, char **argv, char **envp);
 
+int		here_doc(char *limiter);
+t_cmd	**create_struct_cmd_heredoc(char **argv, char **envp);
+
 void	free_cmd_array(t_cmd **cmd_array);
 void	free_cmd(t_cmd *cmd);
 void	perror_exit(char *str, int exit_status);
+int		perror_return(char *str, int exit_status);
 
 #endif
