@@ -6,7 +6,7 @@
 #    By: troberts <troberts@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/04 01:33:16 by troberts          #+#    #+#              #
-#    Updated: 2022/08/11 13:32:17 by troberts         ###   ########.fr        #
+#    Updated: 2022/08/20 09:14:19 by troberts         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -152,13 +152,13 @@ HEADER_LIBRARY =	@echo "${COLOR_YELLOW}\
 
 HEADER_CLEAN =		@echo "${COLOR_RED}\
 					\n/* ************************************************************************** */\
-					\n/*                                 CLEANING...                                */\
+					\n/*                              CLEANING LIBFT...                             */\
 					\n/* ************************************************************************** */\n\
 					${COLOR_END}"
 
 HEADER_FCLEAN =		@echo "${COLOR_RED}\
 					\n/* ************************************************************************** */\
-					\n/*                              FORCE CLEANING...                             */\
+					\n/*                           FORCE CLEANING LIBFT...                          */\
 					\n/* ************************************************************************** */\n\
 					${COLOR_END}"
 
@@ -199,9 +199,9 @@ cleanobj:
 cleanobjdir: cleanobj
 	@rm -rf $(OBJ_DIR)
 
-clean: header cleanobjdir
+clean: cleanobjdir
 	
-fclean: header clean
+fclean: clean
 	${HEADER_FCLEAN}
 	@rm -f $(NAME)
 
