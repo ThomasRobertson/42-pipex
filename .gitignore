@@ -22,6 +22,9 @@
 obj/
 *.a
 *.log
+.cache
+a.out.dSYM
+compile_commands.json
 
 # Specific files
 file1
