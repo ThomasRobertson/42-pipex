@@ -35,6 +35,7 @@ SRC_FILE=	\
 			getpathenv.c \
 			here_doc.c \
 			main.c \
+			split_options.c \
 			utils.c
 
 SRC=		$(addprefix $(SRC_DIR), $(SRC_FILE))

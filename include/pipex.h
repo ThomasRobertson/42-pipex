@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 20:25:52 by troberts          #+#    #+#             */
-/*   Updated: 2022/08/19 19:06:46 by troberts         ###   ########.fr       */
+/*   Updated: 2022/08/27 08:46:48 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,15 @@ typedef struct s_pid
 	int		pipefd[2];
 	pid_t	pid;
 }			t_pid;
+
+typedef struct s_split
+{
+	char	*start;
+	size_t	len;
+	size_t	offset_add;
+	char	delimiter;
+	t_bool	is_pair;
+}			t_split;
 
 t_cmd	*get_path_of_cmd(char **envp, char *cmd_char);
 int		fork_and_execute_cmd(t_cmd **cmd_array, int fd_file[2]);
