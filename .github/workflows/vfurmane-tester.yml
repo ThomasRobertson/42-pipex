@@ -1,0 +1,18 @@
+name: vfurmane Tester
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setting up the folder
+      run: |
+          git clone -n https://github.com/vfurmane/pipex-tester.git
+          cd pipex-tester
+          git reset --hard f08dde8ced34224caaf349105b102e301a2ffd29
+
+    - name: Running tester
+      run: cd pipex-tester && ./run.sh
