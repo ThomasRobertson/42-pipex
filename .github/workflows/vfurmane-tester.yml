@@ -13,6 +13,8 @@ jobs:
           git clone -n https://github.com/vfurmane/pipex-tester.git
           cd pipex-tester
           git reset --hard f08dde8ced34224caaf349105b102e301a2ffd29
+          echo "PROJECT_DIRECTORY='../'" >> config.vars
+          echo "CHECK_UPDATE=0" >> config.vars
 
     - name: Running tester
-      run: cd pipex-tester && ./run.sh
+      run: cd pipex-tester && ./run.sh 
