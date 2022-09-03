@@ -27,10 +27,14 @@
     <img src="https://github.com/ThomasRobertson/42-pipex/workflows/Build/badge.svg"
          alt="Norminette Action">
   </a> 
-  <a href="https://github.com/ThomasRobertson/42-pipex/actions/workflows/norminette-action.yml">
+  <a href="https://github.com/ThomasRobertson/42-pipex/actions/workflows/build-action.yml">
     <img src="https://github.com/ThomasRobertson/42-pipex/workflows/Norm Check/badge.svg"
-         alt="Norminette Action">
-  </a> 
+         alt="Build">
+  </a>
+  <a href="https://github.com/ThomasRobertson/42-pipex/actions/workflows/vfurmane-tester.yml">
+    <img src="https://github.com/ThomasRobertson/42-pipex/workflows/vfurmane Tester/badge.svg"
+         alt="vfurmane Tester">
+  </a>
 </p>
 
 <p align="center">
