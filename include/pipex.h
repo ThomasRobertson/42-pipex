@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 20:25:52 by troberts          #+#    #+#             */
-/*   Updated: 2022/08/27 08:46:48 by troberts         ###   ########.fr       */
+/*   Updated: 2022/09/03 20:23:42 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,16 @@
 # define RETURN_SUCCESS EXIT_SUCCESS
 # define RETURN_FAILURE EXIT_FAILURE
 
+# define EXIT_CMD_NOT_FOUND 127
+
 typedef struct s_cmd
 {
 	char	*cmd_name;
 	char	*path;
 	char	**options;
 	char	**envp;
-}			t_cmd;
-
-typedef struct s_pid
-{
-	int		pipefd[2];
 	pid_t	pid;
-}			t_pid;
+}			t_cmd;
 
 typedef struct s_split
 {
