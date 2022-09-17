@@ -17,6 +17,7 @@
 NAME= pipex
 
 # CC= gcc
+CC= clang
 CFLAGS= -Wall -Wextra -Werror -g -I $(INCLUDES)
 
 LIBFT_DIR= libft
@@ -120,6 +121,9 @@ $(NAME): $(LIBFT_LIB) $(OBJ)
 	$(HEADER)
 	$(HEADER_COMPIL)
 	$(CC) $(CFLAGS) -o $@ $(OBJ) $(LIBFT_LIB)
+
+malloc_test: $(LIBFT_LIB) $(OBJ)
+	$(CC) $(CFLAGS) -fsanitize=undefined -rdynamic -o $@ $(OBJ) $(LIBFT_LIB) -L. -lmallocator
 
 $(LIBFT_LIB): makelibf ;
 
