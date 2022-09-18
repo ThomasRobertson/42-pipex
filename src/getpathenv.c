@@ -6,13 +6,13 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 20:32:42 by troberts          #+#    #+#             */
-/*   Updated: 2022/08/22 18:57:09 by troberts         ###   ########.fr       */
+/*   Updated: 2022/09/18 03:04:10 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static char	*generate_cmd_path(char *path_env, char *cmd)
+char	*generate_cmd_path(char *path_env, char *cmd)
 {
 	char	*path_cmd;
 	char	*path_cmd_tmp;
@@ -30,7 +30,7 @@ static char	*generate_cmd_path(char *path_env, char *cmd)
 	return (path_cmd);
 }
 
-static t_cmd	*clean_error(t_cmd *cmd, t_bool display_message, \
+t_cmd	*clean_error(t_cmd *cmd, t_bool display_message, \
 								t_bool return_null)
 {
 	if (display_message)
@@ -47,18 +47,25 @@ static t_cmd	*clean_error(t_cmd *cmd, t_bool display_message, \
 	}
 }
 
-static t_cmd	*get_options(char *cmd_char, char **envp)
+t_cmd	*get_options(char *cmd_char, char **envp)
 {
 	t_cmd	*cmd;
 
 	cmd = malloc(sizeof(t_cmd));
+	if (cmd == NULL)
+		return (NULL);
 	cmd->options = ft_split(cmd_char, ' ');
+	if (cmd->options == NULL)
+	{
+		free(cmd);
+		return (NULL);
+	}
 	cmd->cmd_name = cmd->options[0];
 	cmd->envp = envp;
 	return (cmd);
 }
 
-static t_cmd	*test_correct_access_cmd(t_cmd *cmd, char **path_env)
+t_cmd	*test_correct_access_cmd(t_cmd *cmd, char **path_env)
 {
 	int	i;
 
@@ -94,7 +101,14 @@ t_cmd	*get_path_of_cmd(char **envp, char *cmd_char)
 	while (ft_strnstr(envp[i], "PATH=", 5) == 0)
 		i++;
 	path_env = ft_split(envp[i], ':');
+	if (path_env == NULL)
+		return (NULL);
 	cmd = get_options(cmd_char, envp);
+	if (cmd == NULL)
+	{
+		ft_free_double_ptr(path_env);
+		return (NULL);
+	}
 	cmd = test_correct_access_cmd(cmd, path_env);
 	ft_free_double_ptr(path_env);
 	return (cmd);

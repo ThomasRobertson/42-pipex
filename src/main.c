@@ -6,13 +6,13 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 20:25:28 by troberts          #+#    #+#             */
-/*   Updated: 2022/08/23 01:08:10 by troberts         ###   ########.fr       */
+/*   Updated: 2022/09/17 18:23:18 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static t_cmd	**here_doc_main(int (*fd_file)[2], int argc, char **argv, \
+t_cmd	**here_doc_main(int (*fd_file)[2], int argc, char **argv, \
 																char **envp)
 {
 	t_cmd	**cmd_array;
@@ -29,12 +29,10 @@ static t_cmd	**here_doc_main(int (*fd_file)[2], int argc, char **argv, \
 	if ((*fd_file)[FILE_2] == -1)
 		perror_exit("main: Cannot open file2", 1);
 	cmd_array = create_struct_cmd_heredoc(argv, envp);
-	if (cmd_array == NULL)
-		perror_exit("main: Cannot create cmd_array", 1);
 	return (cmd_array);
 }
 
-static t_cmd	**not_here_doc(int (*fd_file)[2], int argc, char **argv, \
+t_cmd	**not_here_doc(int (*fd_file)[2], int argc, char **argv, \
 																char **envp)
 {
 	t_cmd	**cmd_array;
@@ -50,8 +48,6 @@ static t_cmd	**not_here_doc(int (*fd_file)[2], int argc, char **argv, \
 	if ((*fd_file)[FILE_2] == -1)
 		perror_exit("main: Cannot open file2", 1);
 	cmd_array = create_struct_cmd(argc, argv, envp);
-	if (cmd_array == NULL)
-		perror_exit("main: Cannot create cmd_array", 1);
 	return (cmd_array);
 }
 
@@ -61,6 +57,7 @@ int	main(int argc, char **argv, char **envp)
 	t_cmd	**cmd_array;
 	int		return_status;
 
+	return_status = EXIT_FAILURE;
 	if (argc < 5)
 		ft_exit_print("Not enought arguments.", STDERR_FILENO, EXIT_FAILURE);
 	if (ft_strcmp(argv[1], "here_doc") == 0)
@@ -68,8 +65,9 @@ int	main(int argc, char **argv, char **envp)
 	else
 		cmd_array = not_here_doc(&fd_file, argc, argv, envp);
 	if (cmd_array == NULL)
-		perror_exit("main: Cannot create cmd_array", 1);
-	return_status = fork_and_execute_cmd(cmd_array, fd_file);
+		perror("main: Cannot create cmd_array");
+	else
+		return_status = fork_and_execute_cmd(cmd_array, fd_file);
 	free_cmd_array(cmd_array);
 	close(fd_file[FILE_1]);
 	close(fd_file[FILE_2]);

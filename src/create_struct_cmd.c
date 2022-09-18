@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:36:08 by troberts          #+#    #+#             */
-/*   Updated: 2022/08/19 19:16:01 by troberts         ###   ########.fr       */
+/*   Updated: 2022/09/18 03:06:23 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	free_cmd_array(t_cmd **cmd_array)
 {
 	int	i;
 
+	if (cmd_array == NULL)
+		return ;
 	i = 0;
 	while (cmd_array[i])
 	{
@@ -47,9 +49,9 @@ t_cmd	**create_struct_cmd_heredoc(char **argv, char **envp)
 	t_cmd	**cmd_array;
 
 	cmd_array = malloc(sizeof(*cmd_array) * (2 + 1));
-	cmd_array[2] = NULL;
 	if (cmd_array == NULL)
 		return (NULL);
+	cmd_array[2] = NULL;
 	i = 0;
 	while (i < 2)
 	{
@@ -71,9 +73,9 @@ t_cmd	**create_struct_cmd(int argc, char **argv, char **envp)
 	t_cmd	**cmd_array;
 
 	cmd_array = malloc(sizeof(*cmd_array) * (argc - 2));
-	cmd_array[argc - 3] = NULL;
 	if (cmd_array == NULL)
 		return (NULL);
+	cmd_array[argc - 3] = NULL;
 	i = 2;
 	j = 0;
 	while (i < (argc - 1))

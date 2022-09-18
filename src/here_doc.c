@@ -6,13 +6,13 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 14:44:33 by troberts          #+#    #+#             */
-/*   Updated: 2022/09/01 18:46:51 by troberts         ###   ########.fr       */
+/*   Updated: 2022/09/17 18:12:40 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static char	*get_input_stdin(char *limiter)
+char	*get_input_stdin(char *limiter)
 {
 	char	*line;
 	char	*input_stdin;

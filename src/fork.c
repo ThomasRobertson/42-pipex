@@ -6,13 +6,13 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 12:48:25 by troberts          #+#    #+#             */
-/*   Updated: 2022/09/03 20:23:17 by troberts         ###   ########.fr       */
+/*   Updated: 2022/09/17 18:12:26 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static int	launch_child_process(t_cmd *cmd, int fd_stdin, int fd_file2)
+int	launch_child_process(t_cmd *cmd, int fd_stdin, int fd_file2)
 {
 	int	pipefd[2];
 
@@ -41,7 +41,7 @@ static int	launch_child_process(t_cmd *cmd, int fd_stdin, int fd_file2)
 	return (pipefd[PIPE_READ]);
 }
 
-static int	size_of_array(t_cmd **cmd_array)
+int	size_of_array(t_cmd **cmd_array)
 {
 	int	i;
 
@@ -51,7 +51,7 @@ static int	size_of_array(t_cmd **cmd_array)
 	return (i);
 }
 
-static int	wait_for_child(t_cmd **cmd_array, int nbr_cmd)
+int	wait_for_child(t_cmd **cmd_array, int nbr_cmd)
 {
 	int		wstatus;
 	pid_t	status;
