@@ -17,7 +17,7 @@
 NAME= pipex
 
 # CC= gcc
-CC= clang
+# CC= clang
 CFLAGS= -Wall -Wextra -Werror -g -I $(INCLUDES)
 
 LIBFT_DIR= libft
