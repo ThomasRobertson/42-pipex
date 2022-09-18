@@ -1,0 +1,21 @@
+name: ft_mallocator
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setting up the folder
+      run: |
+          git clone -n https://github.com/tmatis/ft_mallocator.git
+          cd ft_mallocator
+          git reset --hard 1681b322a256fdc5cd032ce4bd6008a26bb82c87
+          echo PROJECT_PATH=".." >> config.sh
+          echo ARGS="Makefile 'sleep 1' cat file2" >> config.sh
+          echo CHECK_LEAKS=1 >> config.sh
+
+    - name: Running tester
+      run: cd ft_mallocator && bash test.sh 
