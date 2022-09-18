@@ -23,6 +23,7 @@
     <img src="https://img.shields.io/github/license/ThomasRobertson/42-pipex"
          alt="License">
   </a>
+  <br>
   <a href="https://github.com/ThomasRobertson/42-pipex/actions/workflows/norminette-action.yml">
     <img src="https://github.com/ThomasRobertson/42-pipex/workflows/Build/badge.svg"
          alt="Norminette Action">
@@ -34,6 +35,9 @@
   <a href="https://github.com/ThomasRobertson/42-pipex/actions/workflows/vfurmane-tester.yml">
     <img src="https://github.com/ThomasRobertson/42-pipex/workflows/vfurmane Tester/badge.svg"
          alt="vfurmane Tester">
+  <a href="https://github.com/ThomasRobertson/42-pipex/actions/workflows/ft_mallocator.yml">
+    <img src="https://github.com/ThomasRobertson/42-pipex/workflows/ft_mallocator/badge.svg"
+         alt="ft_mallocator">
   </a>
 </p>
 
