@@ -6,12 +6,14 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 20:25:52 by troberts          #+#    #+#             */
-/*   Updated: 2022/09/03 20:23:42 by troberts         ###   ########.fr       */
+/*   Updated: 2022/09/18 22:00:57 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
+
+# define _GNU_SOURCE 1
 
 # include "../libft/include/libft.h"
 
@@ -21,6 +23,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <sys/types.h>
 
 # define PIPE_READ 0
@@ -54,10 +57,9 @@ typedef struct s_split
 
 t_cmd	*get_path_of_cmd(char **envp, char *cmd_char);
 int		fork_and_execute_cmd(t_cmd **cmd_array, int fd_file[2]);
-t_cmd	**create_struct_cmd(int argc, char **argv, char **envp);
+t_cmd	**create_struct_cmd(int argc, char **argv, char **envp, int offset);
 
 int		here_doc(char *limiter);
-t_cmd	**create_struct_cmd_heredoc(char **argv, char **envp);
 
 void	free_cmd_array(t_cmd **cmd_array);
 void	free_cmd(t_cmd *cmd);
