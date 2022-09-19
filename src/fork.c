@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 12:48:25 by troberts          #+#    #+#             */
-/*   Updated: 2022/09/17 18:12:26 by troberts         ###   ########.fr       */
+/*   Updated: 2022/09/19 20:14:29 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	launch_child_process(t_cmd *cmd, int fd_stdin, int fd_file2)
 		else
 		{
 			cmd->pid = execve(cmd->path, cmd->options, cmd->envp);
-			perror("launch_child_process: Error with execve.");
+			ft_dprintf(2, "bash: %s: %s\n", cmd->path, strerror(errno));
 		}
 	}
 	close(pipefd[PIPE_WRITE]);

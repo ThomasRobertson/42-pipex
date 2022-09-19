@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 20:32:42 by troberts          #+#    #+#             */
-/*   Updated: 2022/09/18 03:04:10 by troberts         ###   ########.fr       */
+/*   Updated: 2022/09/19 18:33:57 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_cmd	*test_correct_access_cmd(t_cmd *cmd, char **path_env)
 	cmd->path = ft_strdup(cmd->cmd_name);
 	if (cmd->path == NULL)
 		return (clean_error(cmd, false, true));
-	if (access(cmd->path, F_OK | X_OK) == 0)
+	if (ft_strchr(cmd->path, '/'))
 		return (cmd);
 	free(cmd->path);
 	i = 0;
