@@ -8,4 +8,6 @@ jobs:
     name: norminette
     steps:
     - uses: actions/checkout@v3
+      with :
+        submodules: true
     - uses: alexandregv/norminette-action@v3
