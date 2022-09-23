@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 14:44:33 by troberts          #+#    #+#             */
-/*   Updated: 2022/09/18 21:53:03 by troberts         ###   ########.fr       */
+/*   Updated: 2022/09/23 02:07:27 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ int	here_doc(char *limiter)
 	if (here_doc_fd == -1)
 		return (-1);
 	input_heredoc = get_input_stdin(limiter);
-	ft_putstr_fd(input_heredoc, here_doc_fd);
+	if (input_heredoc == NULL)
+		ft_putstr_fd("", here_doc_fd);
+	else
+		ft_putstr_fd(input_heredoc, here_doc_fd);
 	free(input_heredoc);
 	close(here_doc_fd);
 	return (1);
