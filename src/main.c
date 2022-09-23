@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 20:25:28 by troberts          #+#    #+#             */
-/*   Updated: 2022/09/23 02:34:30 by troberts         ###   ########.fr       */
+/*   Updated: 2022/09/23 02:48:19 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ t_cmd	**here_doc_main(int (*fd_file)[2], int argc, char **argv, \
 		perror_exit("main:", EXIT_FAILURE);
 	(*fd_file)[FILE_1] = open(".heredoc", O_RDONLY);
 	if ((*fd_file)[FILE_1] == -1)
+	{
 		ft_printf("bash: %s: %s\n", argv[1], strerror(errno));
+		exit(EXIT_FAILURE);
+	}	
 	(*fd_file)[FILE_2] = open(argv[5], O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if ((*fd_file)[FILE_2] == -1)
 	{
@@ -41,7 +44,10 @@ t_cmd	**not_here_doc(int (*fd_file)[2], int argc, char **argv, \
 
 	(*fd_file)[FILE_1] = open(argv[1], O_RDONLY);
 	if ((*fd_file)[FILE_1] == -1)
+	{
 		ft_printf("bash: %s: %s\n", argv[1], strerror(errno));
+		exit(EXIT_FAILURE);
+	}	
 	(*fd_file)[FILE_2] = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, \
 																		0644);
 	if ((*fd_file)[FILE_2] == -1)
