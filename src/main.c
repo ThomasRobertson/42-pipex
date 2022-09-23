@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 20:25:28 by troberts          #+#    #+#             */
-/*   Updated: 2022/09/23 02:33:02 by troberts         ###   ########.fr       */
+/*   Updated: 2022/09/23 02:34:30 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_cmd	**here_doc_main(int (*fd_file)[2], int argc, char **argv, \
 		ft_printf("bash: %s: %s\n", argv[1], strerror(errno));
 	(*fd_file)[FILE_2] = open(argv[5], O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if ((*fd_file)[FILE_2] == -1)
-
+	{
 		close ((*fd_file)[FILE_1]);
 		perror_exit("main: Cannot open file2", EXIT_FAILURE);
 	}
