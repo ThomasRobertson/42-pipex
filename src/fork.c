@@ -6,7 +6,7 @@
 /*   By: troberts <troberts@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 12:48:25 by troberts          #+#    #+#             */
-/*   Updated: 2022/09/19 20:14:29 by troberts         ###   ########.fr       */
+/*   Updated: 2022/09/23 02:24:14 by troberts         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,6 @@ int	fork_and_execute_cmd(t_cmd **cmd_array, int fd_file[2])
 			return (EXIT_FAILURE);
 		i++;
 	}
+	close(pipefd_read);
 	return (wait_for_child(cmd_array, nbr_cmd));
 }
